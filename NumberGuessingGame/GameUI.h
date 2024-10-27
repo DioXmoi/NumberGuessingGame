@@ -106,6 +106,25 @@ namespace GameUI {
 			return number;
 		}
 	}
+
+	bool ShouldContinue() {
+		while (true) {
+			char ch;
+			std::cout << "\nDo you want to play again? (y/n): ";
+			std::cin >> ch;
+			if (ch == 'y' || ch == 'Y') {
+				IgnoreLine();
+				return true;
+			}
+			else if (ch == 'n' || ch == 'N') {
+				IgnoreLine();
+				return false;
+			}
+			else {
+				HandleInvalidInput("Invalid input. Please enter 'y' or 'n'.\n");
+			}
+		}
+	}
 }
 
 
