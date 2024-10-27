@@ -1,5 +1,6 @@
 ﻿#include "Random.h"
 #include "Level.h"
+#include "Game.h"
 
 #include <array>
 #include <string>
@@ -23,29 +24,6 @@ Level PrintAndSelectLevel() {
 	return Level{ static_cast<Level::Type>(out - 1) };
 }
 
-//Написать что return это количество попыток 
-int PlayGame(const Level& level) {
-	const int guessNumber{ Random::Get(1, 100) };
-	//Разбить код на функции.
-	for (int i{ 0 }; i < level.GetNumberChances(); ++i) {
-		int number;
-		std::cout << "Enter your guess: ";
-		std::cin >> number;
-		if (number == guessNumber) {
-			return i;
-		}
-
-		if (number > guessNumber) {
-			std::cout << "Incorrect! The number is less than " << number << ".\n";
-		}
-		else {
-			std::cout << "Incorrect! The number is greater than " << number << ".\n";
-		}
-	}
-
-	return 0;
-}
-
 int main() {
 	std::cout << "Welcome to the Number Guessing Game!\n";
 	std::cout << "I'm thinking of a number between 1 and 100.\n";
@@ -58,7 +36,8 @@ int main() {
 		" chances to guess the correct number.\n" <<
 		"Let's start the game!\n\n";
 
-	int count{ PlayGame(level) };
+	Game game{ };
+	int count{ game.Play(level) };
 	if (count > 0) {
 		std::cout << "Congratulations! You guessed the correct number in " << count << " attempts.\n";
 	}
