@@ -4,7 +4,7 @@
 
 static inline bool IsVictory(int number, int targetNumber) { return targetNumber == number; }
 
-Game::Result Game::Play(const Level& level) {
+Game::Result Game::Play(const Game::Level& level) {
 	const int targetNumber = Random::Get(1, 100);
 
 	auto start{ std::chrono::system_clock::now() };
