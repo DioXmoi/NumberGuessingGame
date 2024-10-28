@@ -19,7 +19,7 @@ namespace GameUI {
 		std::cout << "I'm thinking of a number between 1 and 100.\n";
 	}
 
-	void DisplayLevelsMessage() {
+	inline void DisplayLevelsMessage() {
 		std::cout << "\nPlease select the difficulty level:\n\n";
 		static const std::array levels{ Level{ Level::Easy }, Level{ Level::Medium }, Level{ Level::Hard } };
 		for (std::size_t i{ 0 }; i < levels.size(); ++i) {
@@ -60,13 +60,13 @@ namespace GameUI {
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	}
 
-	void HandleInvalidInput(std::string_view message) {
+	inline void HandleInvalidInput(std::string_view message) {
 		std::cin.clear();
 		IgnoreLine();
 		std::cout << message;
 	}
 
-	int GetInteger(std::string_view prompt) {
+	inline int GetInteger(std::string_view prompt) {
 		while (true) {
 			int number;
 			std::cout << prompt;
@@ -83,7 +83,7 @@ namespace GameUI {
 		}
 	}
 
-	Level GetSelectedLevel() {
+	inline Level GetSelectedLevel() {
 		while (true) {
 			int type{ GetInteger("\nEnter your choice: ")};
 			if (type < 1 || type > 3) {
@@ -95,7 +95,7 @@ namespace GameUI {
 		}
 	}
 
-	int GetGuess() {
+	inline int GetGuess() {
 		while (true) {
 			std::cout << "Enter your guess (between 1 and 100): ";
 
@@ -109,7 +109,7 @@ namespace GameUI {
 		}
 	}
 
-	bool ShouldContinue() {
+	inline bool ShouldContinue() {
 		while (true) {
 			char ch;
 			std::cout << "\nDo you want to play again? (y/n): ";
