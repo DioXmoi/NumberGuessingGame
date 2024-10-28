@@ -4,6 +4,7 @@
 #define _20_40_27_10_2024_GAMEUI_H_
 
 #include "Level.h"
+#include "Result.h"
 
 #include <array>
 #include <string_view>
@@ -45,9 +46,10 @@ namespace GameUI {
 		}
 	}
 
-	inline void DisplayResultMessege(int count) {
-		if (count > 0) {
-			std::cout << "Congratulations! You guessed the correct number in " << count << " attempts.\n";
+	inline void DisplayResultMessege(const Game::Result& result) {
+		if (result) {
+			std::cout << "Congratulations! You guessed the correct number in " << result.getChances() << 
+				" attempts.\nAnd it took you " << result.getTime() << " seconds.\n";
 		}
 		else {
 			std::cout << "You'll win next time.\n";
@@ -85,7 +87,7 @@ namespace GameUI {
 		while (true) {
 			int type{ GetInteger("\nEnter your choice: ")};
 			if (type < 1 || type > 3) {
-				HandleInvalidInput("Invalid input. Please enter a number between 1 and 3.\n");
+				std::cout << "Invalid input. Please enter a number between 1 and 3.\n";
 				continue;
 			}
 
@@ -93,13 +95,13 @@ namespace GameUI {
 		}
 	}
 
-	int GetGlass() {
+	int GetGuess() {
 		while (true) {
 			std::cout << "Enter your guess (between 1 and 100): ";
 
 			int number{ GetInteger("Enter your guess: ")};
 			if (number > 100 || number < 1) {
-				HandleInvalidInput("Invalid input. Please enter a number between 1 and 100.\n");
+				std::cout << "Invalid input. Please enter a number between 1 and 100.\n";
 				continue;
 			}
 
