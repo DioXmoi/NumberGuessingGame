@@ -1,23 +1,37 @@
-﻿#include "Level.h"
+﻿#include "File.h"
 #include "Game.h"
 #include "GameUI.h"
+#include "Level.h"
+#include "Result.h"
+#include "ResultJsonConverter.h"
 
+#include <vector>
+#include <string>
 
 int main() {
 	GameUI::DisplayWelcomeMessage();
 
+	File file{ "BestResults.json" };
+	std::vector<Game::Result> results{ 
+		ResultJsonConverter::ParseArray(file.read()) };
+
 	do {
 		GameUI::DisplayLevelsMessage();
 
-		const Level level{ GameUI::GetSelectedLevel() };
+		//Print best result.
+
+		const Game::Level level{ GameUI::GetSelectedLevel() };
 
 		GameUI::DisplayStartingGameMessage(level);
 	
-		GameUI::DisplayResultMessege(Game::Play(level));
+		auto result{ Game::Play(level) };
+
+		results.push_back(result);
+		GameUI::DisplayResultMessege(result);
 
 	} while (GameUI::ShouldContinue());
-	
-	//Добавьте таймер, чтобы видеть, сколько времени требуется пользователю, чтобы угадать число
+
+	file.write(ResultJsonConverter::Serialize(results));
 
 	return 0;
 }

@@ -45,8 +45,8 @@ void  GameUI::DisplayHint(int guess, int targetNumber) {
 
 void GameUI::DisplayResultMessege(const Game::Result& result) {
 	if (result) {
-		std::cout << "Congratulations! You guessed the correct number in " << result.getChances() <<
-			" attempts.\nAnd it took you " << result.getTime() << " seconds.\n";
+		std::cout << "Congratulations! You guessed the correct number in " << result.GetChances() <<
+			" attempts.\nAnd it took you " << result.GetTime() << " seconds.\n";
 	}
 	else {
 		std::cout << "You'll win next time.\n";

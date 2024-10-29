@@ -13,11 +13,11 @@ Game::Result Game::Play(const Game::Level& level) {
 		if (IsVictory(guess, targetNumber)) {
 			auto end{ std::chrono::system_clock::now() };
 			std::time_t time{ std::chrono::system_clock::to_time_t(end) - std::chrono::system_clock::to_time_t(start) };
-			return Result{ chance, time };
+			return Result{ chance, time, level.GetLevelType() };
 		}
 
 		GameUI::DisplayHint(guess, targetNumber);
 	}
 
-	return Result{ -1, -1 };
+	return Result{ -1, -1, level.GetLevelType() };
 }
