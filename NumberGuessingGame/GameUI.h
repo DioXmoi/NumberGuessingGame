@@ -16,7 +16,7 @@
 namespace GameUI {
 	void DisplayWelcomeMessage();
 
-	void DisplayLevelsMessage();
+	void DisplayLevelsMessage(const std::vector<Game::Result>& best);
 
 	void DisplayStartingGameMessage(const Game::Level& level);
 

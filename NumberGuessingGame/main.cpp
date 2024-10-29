@@ -5,20 +5,22 @@
 #include "Result.h"
 #include "ResultJsonConverter.h"
 
+#include <algorithm>
 #include <vector>
 #include <string>
+
+
 
 int main() {
 	GameUI::DisplayWelcomeMessage();
 
 	File file{ "BestResults.json" };
-	std::vector<Game::Result> results{ 
-		ResultJsonConverter::ParseArray(file.read()) };
+	std::vector<Game::Result> bestResults{ 
+		Game::FindBestResults(ResultJsonConverter::ParseArray(file.read())) };
 
 	do {
-		GameUI::DisplayLevelsMessage();
+		GameUI::DisplayLevelsMessage(bestResults);
 
-		//Print best result.
 
 		const Game::Level level{ GameUI::GetSelectedLevel() };
 
@@ -26,12 +28,12 @@ int main() {
 	
 		auto result{ Game::Play(level) };
 
-		results.push_back(result);
+		bestResults.push_back(result);
 		GameUI::DisplayResultMessege(result);
 
 	} while (GameUI::ShouldContinue());
 
-	file.write(ResultJsonConverter::Serialize(results));
+	file.write(ResultJsonConverter::Serialize(Game::FindBestResults(bestResults)));
 
 	return 0;
 }

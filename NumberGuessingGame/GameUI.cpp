@@ -1,6 +1,7 @@
 #include "GameUI.h"
 
 
+#include <algorithm>
 #include <array>
 #include <iostream>
 #include <limits>
@@ -13,12 +14,25 @@ void GameUI::DisplayWelcomeMessage() {
 }
 
 
-void GameUI::DisplayLevelsMessage() {
+void GameUI::DisplayLevelsMessage(const std::vector<Game::Result>& best) {
 	std::cout << "\nPlease select the difficulty level:\n\n";
 	static const std::array levels{ Game::Level{ Game::Level::Easy }, Game::Level{ Game::Level::Medium }, Game::Level{ Game::Level::Hard } };
 	for (std::size_t i{ 0 }; i < levels.size(); ++i) {
-		std::cout << i + 1 << ". " << levels[i].GetLevelType() <<
-			"(" << levels[i].GetNumberChances() << " chances)\n";
+		Game::Level::Type type{ levels[i].GetLevelType() };
+		std::cout << i + 1 << ". " << type <<
+			"(" << levels[i].GetNumberChances() << " chances) ";
+
+		auto found{ std::ranges::find_if(best, 
+			[type](const auto& item) -> bool {
+				return item.GetLevelType() == type;
+			}) };
+
+		if (found != best.end()) {
+			std::cout << " - The best result is a precise " << found -> GetChances() << 
+				" chances and " << found -> GetTime() << " seconds!";
+		}
+
+		std::cout << "\n";
 	}
 }
 
